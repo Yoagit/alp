@@ -1,4 +1,4 @@
-package org.raoul.alp.model.position;
+package org.raoul.alp.model.space.position;
 
 public interface Position<T extends Position<?>> {
 
@@ -9,4 +9,6 @@ public interface Position<T extends Position<?>> {
     void randomMove(double distance);
 
     Position2D get2DPosition();
+    
+    T duplicate();
 }

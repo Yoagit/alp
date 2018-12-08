@@ -6,8 +6,11 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-public class Flat2DFrame extends JFrame {
+import org.raoul.alp.model.Playground;
+import org.raoul.alp.model.space.Space2D;
 
+public class Flat2DFrame extends JFrame {
+    
     public Flat2DFrame() {
 
         initUI();
@@ -27,10 +30,10 @@ public class Flat2DFrame extends JFrame {
             }
         });
 
-        setTitle("Artificial Life playground.");
-        setSize(500, 500);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setTitle("Artificial Life playground.");
+        this.setSize(((Space2D)Playground.getSpace()).getWidth()+16, ((Space2D)Playground.getSpace()).getHeight()+38);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
 }

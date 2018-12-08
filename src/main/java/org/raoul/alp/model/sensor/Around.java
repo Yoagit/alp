@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.raoul.alp.model.Playground;
-import org.raoul.alp.model.position.Position;
 import org.raoul.alp.model.ressource.Food;
 import org.raoul.alp.model.ressource.Ressource;
+import org.raoul.alp.model.space.position.Position;
 
 public class Around extends Sens {
     
@@ -16,6 +16,10 @@ public class Around extends Sens {
 
     public Around(double radius) {
         this.radius = radius;
+    }
+
+    public double getRadius() {
+        return radius;
     }
 
     public Map<Double, Ressource> ressourceDetected(Position<Position<?>> position) {

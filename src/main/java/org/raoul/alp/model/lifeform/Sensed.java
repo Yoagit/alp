@@ -5,10 +5,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.raoul.alp.model.Playground;
-import org.raoul.alp.model.position.Position;
-import org.raoul.alp.model.position.Position2D;
 import org.raoul.alp.model.ressource.Food;
 import org.raoul.alp.model.sensor.Sens;
+import org.raoul.alp.model.space.position.Position;
+import org.raoul.alp.model.space.position.Position2D;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +18,14 @@ public class Sensed extends Mortal {
 
     Set<Sens> senses;
     double speed;
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public Set<Sens> getSenses() {
+        return senses;
+    }
 
     public Sensed(int health, Position position, Set<Sens> senses, double speed) {
         super(health, position, "Sensed");
@@ -44,30 +52,33 @@ public class Sensed extends Mortal {
 
                 if (closest == 0) {
                     // eat it.
-                    LOGGER.info("Eating stuff");
+                    // LOGGER.info("Eating stuff");
                     if (targetRessource.getEnergy() > 0) {
                         targetRessource.consume();
                         this.heal();
                     }
                 } else {
                     // move to it.
-                    LOGGER.info(
-                            "Moving from " + this.getPosition() + " / to: " + targetRessource.getPosition().toString());
+                    // LOGGER.info("Moving from " + this.getPosition() + " / to:
+                    // " + targetRessource.getPosition().toString());
                     this.getPosition().moveTo(targetRessource.getPosition(), this.speed);
-                    LOGGER.info("After Move " + this.getPosition());
+                    this.decay((int) this.speed);
+                    // LOGGER.info("After Move " + this.getPosition());
                 }
             } else {
-                LOGGER.info("Can't see any ressource.");
+                // LOGGER.info("Can't see any ressource.");
                 this.getPosition().randomMove(this.speed);
+                this.decay((int) this.speed);
             }
         } else {
             this.getPosition().randomMove(this.speed);
+            this.decay((int) this.speed);
         }
     }
 
     @Override
-    public void mitosis(){
-        Playground.addLifeform(new Sensed(100, new Position2D(this.getPosition().get2DPosition().getX(), this.getPosition().get2DPosition().getY()), this.senses, 5));
+    public void mitosis() {
+        Playground.addLifeform(
+                new Sensed(100, this.getPosition().duplicate(), this.senses, this.speed + (Math.random()) - 0.5));
     }
-
 }

@@ -1,11 +1,10 @@
 package org.raoul.alp.model.lifeform;
 
+import org.raoul.alp.model.Playground;
+import org.raoul.alp.model.ressource.Food;
+import org.raoul.alp.model.space.position.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.raoul.alp.model.Playground;
-import org.raoul.alp.model.position.Position;
-import org.raoul.alp.model.position.Position2D;
-import org.raoul.alp.model.ressource.Food;
 
 public abstract class Lifeform implements Runnable {
     
@@ -58,6 +57,10 @@ public abstract class Lifeform implements Runnable {
         this.health--;
     }
 
+    protected void decay(int decayValue) {
+        this.health-=decayValue;
+    }
+
     protected void heal() {
         this.health=100;
     }
@@ -78,7 +81,7 @@ public abstract class Lifeform implements Runnable {
                 this.mitosis();
             }
             try {
-                LOGGER.info(String.format("Name: %s, Age: %s, Health: %s", this.getName(), this.age, this.health));
+                //LOGGER.info(String.format("Name: %s, Age: %s, Health: %s", this.getName(), this.age, this.health));
                 Thread.sleep((long) 10);
             } catch (InterruptedException e) {
                 LOGGER.error("Can't sleep");

@@ -1,12 +1,16 @@
-package org.raoul.alp.model.position;
+package org.raoul.alp.model.space.position;
+
+import org.raoul.alp.model.space.Space2D;
 
 public class Position2D implements Position<Position2D> {
     private double x, y;
+    private Space2D space;
 
-    public Position2D(double x, double y) {
+    public Position2D(double x, double y, Space2D space) {
         super();
         this.x = x;
         this.y = y;
+        this.space = space;
     }
 
     public double getX() {
@@ -52,6 +56,15 @@ public class Position2D implements Position<Position2D> {
         double angle = Math.random()*2*Math.PI;
         this.x = this.x + Math.cos(angle) * distance;
         this.y = this.y + Math.sin(angle) * distance;
+        if (this.x < 0) this.x=0;
+        if (this.x > space.getWidth()) this.x = this.space.getWidth();
+        if (this.y < 0) this.y=0;
+        if (this.y > space.getHeight()) this.y = this.space.getHeight();
+    }
+    
+    @Override
+    public Position2D duplicate(){
+        return new Position2D(this.x, this.y, this.space);
     }
 
 }

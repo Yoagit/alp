@@ -1,6 +1,6 @@
 package org.raoul.alp.model.ressource;
 
-import org.raoul.alp.model.position.Position;
+import org.raoul.alp.model.space.position.Position;
 
 public class Ressource {
     private Position position;

@@ -1,6 +1,6 @@
 package org.raoul.alp.model.lifeform;
 
-import org.raoul.alp.model.position.Position;
+import org.raoul.alp.model.space.position.Position;
 
 public class Mortal extends Lifeform {
 

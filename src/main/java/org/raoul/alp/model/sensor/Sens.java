@@ -2,9 +2,9 @@ package org.raoul.alp.model.sensor;
 
 import java.util.Map;
 
-import org.raoul.alp.model.position.Position;
 import org.raoul.alp.model.ressource.Food;
 import org.raoul.alp.model.ressource.Ressource;
+import org.raoul.alp.model.space.position.Position;
 
 public abstract class Sens {
 

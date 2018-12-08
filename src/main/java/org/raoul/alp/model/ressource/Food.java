@@ -1,7 +1,7 @@
 package org.raoul.alp.model.ressource;
 
 import org.raoul.alp.model.Playground;
-import org.raoul.alp.model.position.Position;
+import org.raoul.alp.model.space.position.Position;
 
 public class Food extends Ressource{
     private int energy;
@@ -15,7 +15,7 @@ public class Food extends Ressource{
         return energy;
     }
     
-    public void consume(){
+    synchronized public void consume(){
         this.energy--;
         if (this.energy < 1){
             Playground.removeRessource(this);

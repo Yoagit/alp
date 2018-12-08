@@ -5,37 +5,73 @@ import java.util.Set;
 
 import org.raoul.alp.model.lifeform.Lifeform;
 import org.raoul.alp.model.ressource.Ressource;
+import org.raoul.alp.model.space.Space;
+import org.raoul.alp.model.space.position.Position;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Playground {
-    static Set<Ressource> onGround = new HashSet<>();
-    static Set<Lifeform> alive = new HashSet<>();
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Playground.class);
+
+    static private Set<Ressource> onGround = new HashSet<>();
+    static private Set<Lifeform> alive = new HashSet<>();
+    static private Space SPACE;
+    
+    public static void setSpace(Space space){
+        SPACE = space;
+    }
+    
+    public static Space getSpace(){
+        return SPACE;
+    }
+    
+    public static Position getRandomPosition(){
+        return SPACE.getRandomPosition();
+    }
 
     public static Set<Ressource> getOnGround() {
-        return onGround;
+        synchronized (onGround) {
+            return new HashSet<>(onGround);
+        }
     }
 
     public static Set<Lifeform> getAlive() {
-        return alive;
-    }
-    
-    public static void start(){
-        for(Lifeform lf : alive){
-            Thread thrd = new Thread(lf);
-            thrd.start();
+        synchronized (alive) {
+            return new HashSet<>(alive);
         }
     }
-    
-    public static void removeRessource(Ressource res){
-        onGround.remove(res);
+
+    public static void removeRessource(Ressource res) {
+        synchronized (onGround) {
+            LOGGER.debug("removeRessource start: " + onGround.size());
+            onGround.remove(res);
+            LOGGER.debug("removeRessource done-: " + onGround.size());
+        }
     }
-    public static void addRessource(Ressource res){
-        onGround.add(res);
+
+    public static void addRessource(Ressource res) {
+        synchronized (onGround) {
+            LOGGER.debug("addRessource start: " + onGround.size());
+            onGround.add(res);
+            LOGGER.debug("addRessource done-: " + onGround.size());
+        }
     }
-    public static void removeLifeform(Lifeform life){
-        alive.remove(life);
+
+    public static void removeLifeform(Lifeform life) {
+        synchronized (alive) {
+            LOGGER.debug("removeLifeform start: " + alive.size());
+            alive.remove(life);
+            LOGGER.debug("removeLifeform done-: " + alive.size());
+        }
     }
-    public static void addLifeform(Lifeform life){
-        alive.add(life);
+
+    public static void addLifeform(Lifeform life) {
+        synchronized (alive) {
+            LOGGER.debug("addLifeform start: " + alive.size());
+            alive.add(life);
+            LOGGER.debug("addLifeform done-: " + alive.size());
+        }
         Thread thrd = new Thread(life);
         thrd.start();
     }
