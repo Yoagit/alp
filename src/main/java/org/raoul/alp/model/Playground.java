@@ -29,6 +29,9 @@ public class Playground {
     public static Position getRandomPosition(){
         return SPACE.getRandomPosition();
     }
+    public static Position getRandomOrientedPosition(){
+        return SPACE.getRandomOrientedPosition();
+    }
 
     public static Set<Ressource> getOnGround() {
         synchronized (onGround) {

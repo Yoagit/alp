@@ -10,7 +10,7 @@ import org.raoul.alp.model.ressource.Food;
 import org.raoul.alp.model.ressource.Ressource;
 import org.raoul.alp.model.space.position.Position;
 
-public class Around extends Sens {
+public class Around<T extends Position<?>> implements Sens<Position<T>>{
     
     private double radius;
 
@@ -22,11 +22,11 @@ public class Around extends Sens {
         return radius;
     }
 
-    public Map<Double, Ressource> ressourceDetected(Position<Position<?>> position) {
+    public Map<Double, Ressource> ressourceDetected(Position<T> position) {
         Map<Double, Ressource> result = new HashMap<>();
         Set<Ressource> objectOnGround = Playground.getOnGround();
         for (Ressource r : objectOnGround) {
-            Double dist = position.distanceTo(r.getPosition()); 
+            Double dist = position.distanceTo((T) r.getPosition()); 
             if (dist < this.radius) {
                 result.put(dist, r);
             }
@@ -34,12 +34,12 @@ public class Around extends Sens {
         return result;
     }
     
-    public Map<Double, Food> foodDetected(Position<Position<?>> position) {
+    public Map<Double, Food> foodDetected(Position<T> position) {
         Map<Double, Food> result = new HashMap<>();
         Set<Ressource> objectOnGround = Playground.getOnGround();
         for (Ressource r : objectOnGround) {
             if (r instanceof Food){
-            Double dist = position.distanceTo(r.getPosition()); 
+            Double dist = position.distanceTo((T) r.getPosition()); 
             if (dist < this.radius) {
                 result.put(dist, (Food)r);
             }}

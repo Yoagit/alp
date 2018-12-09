@@ -15,7 +15,6 @@ import org.raoul.alp.model.lifeform.Lifeform;
 import org.raoul.alp.model.lifeform.Sensed;
 import org.raoul.alp.model.ressource.Ressource;
 import org.raoul.alp.model.space.Space2D;
-import org.raoul.alp.model.space.position.Position2D;
 import org.raoul.alp.view.elements.LifeformRepresentation;
 import org.raoul.alp.view.elements.RessourceRepresentation;
 

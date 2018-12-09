@@ -1,11 +1,13 @@
 package org.raoul.alp.model.lifeform;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import org.raoul.alp.model.Playground;
 import org.raoul.alp.model.ressource.Food;
+import org.raoul.alp.model.sensor.Around;
 import org.raoul.alp.model.sensor.Sens;
 import org.raoul.alp.model.space.position.Position;
 import org.raoul.alp.model.space.position.Position2D;
@@ -16,18 +18,18 @@ public class Sensed extends Mortal {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Sensed.class);
 
-    Set<Sens> senses;
+    Set<Sens<Position<?>>> senses;
     double speed;
 
     public double getSpeed() {
         return speed;
     }
 
-    public Set<Sens> getSenses() {
+    public Set<Sens<Position<?>>> getSenses() {
         return senses;
     }
 
-    public Sensed(int health, Position position, Set<Sens> senses, double speed) {
+    public Sensed(int health, Position<?> position, Set<Sens<Position<?>>> senses, double speed) {
         super(health, position, "Sensed");
         this.senses = senses;
         this.speed = speed;
@@ -40,7 +42,7 @@ public class Sensed extends Mortal {
 
         if (this.isHealNeeded()) {
             Map<Double, Food> detectedRessource = new HashMap<>();
-            for (Sens s : this.senses) {
+            for (Sens<Position<?>> s : this.senses) {
                 detectedRessource.putAll(s.foodDetected(this.getPosition()));
             }
             if (!detectedRessource.isEmpty()) {
@@ -78,7 +80,16 @@ public class Sensed extends Mortal {
 
     @Override
     public void mitosis() {
+        Set<Sens<Position<?>>> newSenses = new HashSet<>();
+        for (Sens<Position<?>> s : this.senses){
+            if (s instanceof Around){
+                double r = ((Around)s).getRadius() + (Math.random())*10 - 5;
+                newSenses.add(new Around(r));
+            } else {
+                newSenses.add(s);
+            }
+        }
         Playground.addLifeform(
-                new Sensed(100, this.getPosition().duplicate(), this.senses, this.speed + (Math.random()) - 0.5));
+                new Sensed(100, this.getPosition().duplicate(), newSenses, this.speed + (Math.random()) - 0.5));
     }
 }

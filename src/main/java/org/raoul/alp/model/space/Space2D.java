@@ -2,6 +2,8 @@ package org.raoul.alp.model.space;
 
 import org.raoul.alp.model.space.position.Position;
 import org.raoul.alp.model.space.position.Position2D;
+import org.raoul.alp.model.space.position.Position2DOriented;
+import org.raoul.alp.model.space.position.PositionOriented;
 
 public class Space2D implements Space {
 
@@ -34,5 +36,8 @@ public class Space2D implements Space {
 
     public Position<?> getRandomPosition() {
         return new Position2D(Math.random() * width, Math.random() * height, this);
+    }
+    public PositionOriented<?> getRandomOrientedPosition() {
+        return new Position2DOriented(Math.random() * width, Math.random() * height, this);
     }
 }
